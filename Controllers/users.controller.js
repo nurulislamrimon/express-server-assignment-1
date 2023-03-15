@@ -48,3 +48,22 @@ module.exports.updateAnUser = (req, res) => {
         console.log("Some information is missing!");
     }
 }
+
+module.exports.updateBulkUser = (req, res) => {
+    const bulkUsers = req.body;
+    if (bulkUsers.length) {
+        for (i = 0; i < bulkUsers.length; i++) {
+            const userUpdateData = bulkUsers[i];
+
+            const existingUser = users.find(user => user.id === userUpdateData.id);
+
+            const indexOfUser = users.indexOf(existingUser);
+            users[indexOfUser] = userUpdateData;
+            console.log(`${indexOfUser} index user updated.`);
+        }
+        res.status(200).send({ result: "users information has been updated" })
+    } else {
+        res.status(400).send({ result: "Faild to update bulk users! Please enter valid users information." });
+        console.log("Input is not valid");
+    }
+}
