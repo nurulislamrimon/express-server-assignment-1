@@ -67,3 +67,17 @@ module.exports.updateBulkUser = (req, res) => {
         console.log("Input is not valid");
     }
 }
+
+module.exports.deleteUser = (req, res) => {
+    const deleteUserId = req.body.id;
+    const userIndex = users.findIndex(user => user.id === deleteUserId);
+    if (userIndex >= 0) {
+        const result = users.splice(userIndex, 1);
+        res.status(200).send({ result: `User ${deleteUserId} is successfully deleted` })
+        console.log(`User ${deleteUserId} is successfully deleted`);
+    } else {
+        res.status(400).send({ result: "Delete operation faild! Please enter a valid user id!" })
+        console.log("Invalid user id!");
+
+    }
+}
